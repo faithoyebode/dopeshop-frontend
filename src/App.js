@@ -9,6 +9,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import ShippingPage from './pages/ShippingPage';
+import PaymentPage from './pages/PaymentPage';
+
 
 
 
@@ -26,6 +28,7 @@ const App = () => {
             <Route path='/product/:id' component={ProductPage} exact />
             <Route path='/cart/:id?' component={CartPage} />
             <Route path='/shipping' component={ShippingPage} exact />
+            <Route path='/payment' component={PaymentPage} exact />
         </Container>
       </main>
       <Footer />
