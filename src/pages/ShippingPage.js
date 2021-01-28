@@ -3,18 +3,27 @@ import { useHistory } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
+import { saveShippingAddress } from '../actions/cartActions';
 
 const ShippingPage = () => {
     const history = useHistory();
 
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [postalCode, setPostalCode] = useState('');
-    const [country, setCountry] = useState('');
+    const dispatch = useDispatch();
+
+    const cart = useSelector(state => state.cart);
+
+    const { shippingAddress } = cart;
+
+    const [address, setAddress] = useState(shippingAddress.address);
+    const [city, setCity] = useState(shippingAddress.city);
+    const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
+    const [country, setCountry] = useState(shippingAddress.country);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log('submit');
+        dispatch(saveShippingAddress({ address, city, postalCode, country }));
+        history.push('/payment');
+
     }
 
     return (
@@ -55,7 +64,7 @@ const ShippingPage = () => {
                 </Form.Group>
 
                 <Form.Group controlId='country'>
-                    <Form.Label>Postal Code</Form.Label>
+                    <Form.Label>Country</Form.Label>
                     <Form.Control 
                         type='text' 
                         placeholder='Enter country' 
