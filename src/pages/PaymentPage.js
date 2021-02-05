@@ -19,7 +19,7 @@ const PaymentPage = () => {
         history.push('/shipping');
     }
 
-    const [paymentMethod, setPaymentMethod] = useState('PayPal');
+    const [paymentMethod, setPaymentMethod] = useState('paystack');
     
 
     const submitHandler = (e) => {
@@ -38,22 +38,21 @@ const PaymentPage = () => {
                     <Col>
                         <Form.Check 
                             type='radio' 
-                            label='Paypal or Credit Card' 
-                            id='PayPal' 
+                            label='Paystack' 
+                            id='paystack' 
                             name='paymentMethod'
-                            value='PayPal'
+                            value='paystack'
                             checked
                             onChange={(e) => setPaymentMethod(e.target.value)}
                         ></Form.Check>
-                        {/* <Form.Check 
+                        <Form.Check 
                             type='radio' 
-                            label='Stripe' 
-                            id='Stripe' 
+                            label='Flutterwave' 
+                            id='flutterwave' 
                             name='paymentMethod'
-                            value='Stripe'
-                            checked
+                            value='flutterwave'
                             onChange={(e) => setPaymentMethod(e.target.value)}
-                        ></Form.Check> */}
+                        ></Form.Check>
                     </Col>
                 </Form.Group>
                 <Button type='submit' variant='primary'>

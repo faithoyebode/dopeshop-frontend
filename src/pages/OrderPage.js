@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
 import { Link,  useHistory } from 'react-router-dom';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
+import { PaystackButton } from 'react-paystack';
+import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { getOrderDetails } from '../actions/orderActions';
+import { getOrderDetails, payOrder } from '../actions/orderActions';
+import { ORDER_PAY_RESET } from '../constants/orderConstants';
 
 const OrderPage = ({ match }) => {
     const orderId = match.params.id;
@@ -12,8 +15,15 @@ const OrderPage = ({ match }) => {
     const dispatch = useDispatch();
 
     const orderDetails = useSelector(state => state.orderDetails);
-
     const { order, loading, error } = orderDetails;
+
+    const orderPay = useSelector(state => state.orderPay);
+    const { loading: loadingPay, success: successPay } = orderPay;
+
+    const userDetails = useSelector(state => state.userLogin.userInfo);
+    const { email } = userDetails;
+
+    const paymentMethod = useSelector(state => state.cart.paymentMethod);
 
     if(!loading){
         //Calculate prices
@@ -25,10 +35,65 @@ const OrderPage = ({ match }) => {
         
 
     }
+
+    const paystackConfig = {
+        reference: (new Date()).getTime(),
+        email,
+        amount: order?.totalPrice * 100,
+        publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC,
+    };
+      
+      
+    const handlePaystackSuccessAction = (paymentResult) => {
+        // Implementation for whatever you want to do with reference and after success call.
+        dispatch(payOrder(orderId, paymentResult, paymentMethod));
+    }
+
+    const handlePaystackCloseAction = () => {
+        // implementation for  whatever you want to do when the Paystack dialog closed.
+        console.log('closed');
+    }
     
+    const paystackComponentProps = {
+        ...paystackConfig,
+        text: 'Pay with Paystack',
+        onSuccess: (reference) => handlePaystackSuccessAction(reference),
+        onClose: handlePaystackCloseAction
+    };
+    
+    const flutterwaveConfig = {
+        public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC,
+        tx_ref: Date.now(),
+        amount: order?.totalPrice,
+        currency: 'NGN',
+        payment_options: 'card',
+        customer: {
+          email
+        },
+        customizations: {
+          title: 'Dopeshop online store',
+          description: 'Payment for items in cart',
+          logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
+        }
+    };
+
+    const fwConfig = {
+        ...flutterwaveConfig,
+        text: 'Pay with Flutterwave!',
+        callback: (reference) => {
+            console.log(reference);
+            dispatch(payOrder(orderId, reference, paymentMethod));
+            closePaymentModal(); // this will close the modal programmatically
+        },
+        onClose: () => {},
+    };
+
     useEffect(() => {
-       dispatch(getOrderDetails(orderId));
-    }, [dispatch, orderId]);
+        if(!order || successPay){
+            dispatch({ type: ORDER_PAY_RESET });
+            dispatch(getOrderDetails(orderId));
+        }
+    }, [dispatch, order, orderId, successPay]);
 
     
     return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : 
@@ -139,13 +204,25 @@ const OrderPage = ({ match }) => {
                                     <Col>${order.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
-                            
+                            {
+                                !order.isPaid && (
+                                    <ListGroup.Item>
+                                        {
+                                            loadingPay ? 
+                                            <Loader /> :
+                                            paymentMethod === 'paystack' ?
+                                            <PaystackButton {...paystackComponentProps} className="paystack-btn" /> :
+                                            <FlutterWaveButton {...fwConfig}  className="flutterwave-btn" />
+                                        }
+                                    </ListGroup.Item>
+                                )
+                            }
                         </ListGroup>
-
                     </Card>
                 </Col>
             </Row>
         </>
 }
 
+//eslint-disable-next-line
 export default OrderPage;

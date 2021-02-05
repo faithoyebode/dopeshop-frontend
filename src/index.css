@@ -19,3 +19,23 @@ h2{
 .rating span{
     margin: 0.1rem;
 }
+
+button.paystack-btn, button.flutterwave-btn{
+    color: #fff;
+    border: none;
+    width: 100%;
+    height: 45px;
+}
+
+button.paystack-btn:hover, button.flutterwave-btn:hover{
+    opacity: 0.8;
+}
+
+button.paystack-btn{
+    background-color:  #011B33;
+}
+
+button.flutterwave-btn{
+    background-color:  #F5A623;
+}
+
