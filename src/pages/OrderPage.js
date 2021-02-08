@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Link,  useHistory } from 'react-router-dom';
-import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { PaystackButton } from 'react-paystack';
 import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ const OrderPage = ({ match }) => {
 
     const orderDetails = useSelector(state => state.orderDetails);
     const { order, loading, error } = orderDetails;
-
+    console.log(order);
     const orderPay = useSelector(state => state.orderPay);
     const { loading: loadingPay, success: successPay } = orderPay;
 
