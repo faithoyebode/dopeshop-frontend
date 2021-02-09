@@ -1,0 +1,1 @@
+export { decodeEntity } from './decodeEntity';
