@@ -41,8 +41,8 @@ const ProfilePage = ({ location }) => {
         }else{
             if(!user.name){
                 dispatch(getUserDetails('profile'));
-                dispatch(listMyOrders());
             }else{
+                dispatch(listMyOrders());
                 setName(user.name);
                 setEmail(user.email);
             }
