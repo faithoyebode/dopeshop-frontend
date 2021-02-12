@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button } from 'react-bootstrap';
 import { FaCheck, FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
