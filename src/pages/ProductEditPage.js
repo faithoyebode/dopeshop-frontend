@@ -73,7 +73,7 @@ const ProductEditPage = ({ match }) => {
                 }
             }
 
-            const { data } = await axios.post('/api/upload', formData, config);
+            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/upload`, formData, config);
 
             setImage(data);
             setUploading(false);
