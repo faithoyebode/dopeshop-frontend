@@ -4,9 +4,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import { logout } from '../actions/userActions'
+import { useHistory } from 'react-router-dom';
 
 const Header = () => {
     const dispatch = useDispatch();
+
+    const history = useHistory();
 
     const userLogin = useSelector(state => state.userLogin);
 
@@ -14,6 +17,7 @@ const Header = () => {
 
     const logoutHandler = () => {
         dispatch(logout());
+        history.push('/login');
     }
 
     return (
@@ -41,7 +45,21 @@ const Header = () => {
                                     <Nav.Link><FaUser />Sign In</Nav.Link>                  
                                 </LinkContainer>
                             )}
-                            
+                            {
+                               userInfo && userInfo.isAdmin && (
+                                <NavDropdown title='Admin' id='adminmenu'>
+                                    <LinkContainer to='/admin/userlist'>
+                                        <NavDropdown.Item>Users</NavDropdown.Item>
+                                    </LinkContainer>
+                                    <LinkContainer to='/admin/productlist'>
+                                        <NavDropdown.Item>Products</NavDropdown.Item>
+                                    </LinkContainer>
+                                    <LinkContainer to='/admin/orderlist'>
+                                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                                    </LinkContainer>
+                                </NavDropdown>
+                               )
+                            }
                         </Nav>                    
                     </Navbar.Collapse>
                 </Container>

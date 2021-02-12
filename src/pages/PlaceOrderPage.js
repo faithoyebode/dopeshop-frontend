@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
+import { decodeEntity } from '../utils';
+
 
 const PlaceOrderPage = () => {
     const cart = useSelector(state => state.cart);
@@ -91,7 +93,7 @@ const PlaceOrderPage = () => {
                                                         </Link>
                                                     </Col>
                                                     <Col md={4}>
-                                                        {item.qty} x ${item.price} = ${item.qty * item.price}
+                                                        {item.qty} x {decodeEntity('&#x20A6;')}{item.price} = {decodeEntity('&#x20A6;')}{item.qty * item.price}
                                                     </Col>
                                                 </Row>
                                             </ListGroup.Item>
@@ -112,28 +114,28 @@ const PlaceOrderPage = () => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items</Col>
-                                    <Col>${cart.itemsPrice}</Col>
+                                    <Col>{decodeEntity('&#x20A6;')}{cart.itemsPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>${cart.shippingPrice}</Col>
+                                    <Col>{decodeEntity('&#x20A6;')}{cart.shippingPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Tax</Col>
-                                    <Col>${cart.taxPrice}</Col>
+                                    <Col>{decodeEntity('&#x20A6;')}{cart.taxPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Total</Col>
-                                    <Col>${cart.totalPrice}</Col>
+                                    <Col>{decodeEntity('&#x20A6;')}{cart.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>

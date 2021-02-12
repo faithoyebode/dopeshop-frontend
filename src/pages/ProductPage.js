@@ -6,6 +6,7 @@ import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listProductDetails } from '../actions/productActions';
+import { decodeEntity } from '../utils';
 
 
 const ProductPage = ({ match }) => {
@@ -50,7 +51,7 @@ const ProductPage = ({ match }) => {
                                 />
                                 </ListGroup.Item>
                                 <ListGroup.Item>
-                                    Price: ${product.price}
+                                    Price: {decodeEntity('&#x20A6;')}{product.price}
                                 </ListGroup.Item>
                                 <ListGroup.Item>
                                     Description: {product.description}
@@ -64,7 +65,7 @@ const ProductPage = ({ match }) => {
                                         <Row>
                                             <Col>Price:</Col>
                                             <Col>
-                                                <strong>${product.price}</strong>
+                                                <strong>{decodeEntity('&#x20A6;')}{product.price}</strong>
                                             </Col>
                                         </Row>
                                     </ListGroup.Item>
