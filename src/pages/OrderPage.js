@@ -8,6 +8,8 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getOrderDetails, payOrder } from '../actions/orderActions';
 import { ORDER_PAY_RESET } from '../constants/orderConstants';
+import { decodeEntity } from '../utils';
+
 
 const OrderPage = ({ match }) => {
     const orderId = match.params.id;
@@ -160,7 +162,7 @@ const OrderPage = ({ match }) => {
                                                         </Link>
                                                     </Col>
                                                     <Col md={4}>
-                                                        {item.qty} x ${item.price} = ${item.qty * item.price}
+                                                        {item.qty} x {decodeEntity('&#x20A6;')}{item.price} = {decodeEntity('&#x20A6;')}{item.qty * item.price}
                                                     </Col>
                                                 </Row>
                                             </ListGroup.Item>
@@ -181,28 +183,28 @@ const OrderPage = ({ match }) => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items</Col>
-                                    <Col>${order.itemsPrice}</Col>
+                                    <Col>{decodeEntity('&#x20A6;')}{order.itemsPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>${order.shippingPrice}</Col>
+                                    <Col>{decodeEntity('&#x20A6;')}{order.shippingPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Tax</Col>
-                                    <Col>${order.taxPrice}</Col>
+                                    <Col>{decodeEntity('&#x20A6;')}{order.taxPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
 
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Total</Col>
-                                    <Col>${order.totalPrice}</Col>
+                                    <Col>{decodeEntity('&#x20A6;')}{order.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 import Rating from './Rating';
+import { decodeEntity } from '../utils';
 
 const Product = ({ product }) => {
     return (
@@ -18,7 +19,7 @@ const Product = ({ product }) => {
                         <Rating value={product.rating} text={`${product.numReviews} reviews`} />
                     </Card.Text>
                     <Card.Text as='h3'>
-                        ${product.price}
+                        {decodeEntity('&#x20A6;')}{product.price}
                     </Card.Text>
                 </Card.Body>
             </Link>

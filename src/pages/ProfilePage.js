@@ -8,6 +8,8 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
+import { decodeEntity } from '../utils';
+
 
 const ProfilePage = ({ location }) => {
     const [name, setName] = useState('');
@@ -139,7 +141,7 @@ const ProfilePage = ({ location }) => {
                                     <tr key={order._id}>
                                         <td>{order._id}</td>
                                         <td>{order.createdAt.substring(0, 10)}</td>
-                                        <td>{order.totalPrice}</td>
+                                        <td>{decodeEntity('&#x20A6;')}{order.totalPrice}</td>
                                         <td>{order.isPaid ? 
                                                 order.paidAt.substring(0, 10) : (
                                                 <FaTimes style={{color: 'red'}} />
