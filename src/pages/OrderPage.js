@@ -8,7 +8,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getOrderDetails, payOrder, deliverOrder } from '../actions/orderActions';
 import { emptyCart } from '../actions/cartActions';
-import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants';
+import { ORDER_PAY_RESET, ORDER_DELIVER_RESET, ORDER_CREATE_RESET } from '../constants/orderConstants';
 import { decodeEntity } from '../utils';
 
 
@@ -59,6 +59,7 @@ const OrderPage = ({ match }) => {
         // Implementation for whatever you want to do with reference and after success call.
         dispatch(payOrder(orderId, paymentResult, order.paymentMethod));
         dispatch(emptyCart());
+        dispatch({ type: ORDER_CREATE_RESET });
     }
 
     const handlePaystackCloseAction = () => {
@@ -95,6 +96,7 @@ const OrderPage = ({ match }) => {
         callback: (reference) => {
             dispatch(payOrder(orderId, reference, order.paymentMethod));
             dispatch(emptyCart());
+            dispatch({ type: ORDER_CREATE_RESET });
             closePaymentModal(); // this will close the modal programmatically
         },
         onClose: () => {},

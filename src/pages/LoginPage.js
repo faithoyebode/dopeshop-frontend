@@ -42,7 +42,8 @@ const LoginPage = ({ location }) => {
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control 
                         type='email' 
-                        placeholder='Enter email' 
+                        placeholder='Enter email'
+                        autoComplete='off' 
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     ></Form.Control>
