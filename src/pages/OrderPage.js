@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getOrderDetails, payOrder, deliverOrder } from '../actions/orderActions';
+import { emptyCart } from '../actions/cartActions';
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants';
 import { decodeEntity } from '../utils';
 
@@ -57,6 +58,7 @@ const OrderPage = ({ match }) => {
     const handlePaystackSuccessAction = (paymentResult) => {
         // Implementation for whatever you want to do with reference and after success call.
         dispatch(payOrder(orderId, paymentResult, order.paymentMethod));
+        dispatch(emptyCart());
     }
 
     const handlePaystackCloseAction = () => {
@@ -92,6 +94,7 @@ const OrderPage = ({ match }) => {
         text: 'Pay with Flutterwave!',
         callback: (reference) => {
             dispatch(payOrder(orderId, reference, order.paymentMethod));
+            dispatch(emptyCart());
             closePaymentModal(); // this will close the modal programmatically
         },
         onClose: () => {},
